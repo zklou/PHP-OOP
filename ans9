@@ -1,0 +1,26 @@
+<?php 
+// 创建 Database 类，使用单例模式 确保所有数据库连接都使用同一个实例。
+//pdo connection db usr pwd 
+
+class Database{
+    private static $instance = null;
+    private function __construct() { //为什么这次构造使用private 并且 构造内容是空的
+        
+    }
+    public static function getInstance(){
+        if (self :: $instance === null){ // 这个构造逻辑是什么 “：：” 又是什么
+            self :: $instance = new Database(); //为什么要创建一个新db 我不太明白单例模式，我记得还有很多种模式 你要给我讲讲
+        }
+        return self :: $instance;
+    }
+}
+
+$db1 = Database::getInstance();
+$db2 = Database::getInstance();
+var_dump($db1 === $db2); // 输出: true
+
+// 设计模式	        作用	                                    适用场景
+// 单例模式	        确保一个类只有一个实例	                        数据库连接、日志管理、配置管理
+// 工厂模式	        用一个工厂类来创建对象	                        避免 new 关键字，提高灵活性
+// 观察者模式	    一旦某个对象发生变化，所有订阅它的对象都会收到通知	 事件系统（比如 Laravel 事件监听）
+// 策略模式         在运行时动态切换不同的算法或逻辑	              支付方式（支付宝 / 微信 / 信用卡）
